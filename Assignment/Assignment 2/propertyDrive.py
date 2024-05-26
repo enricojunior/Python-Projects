@@ -18,7 +18,11 @@ def main():
                 print("No property has been registered yet")
             else:
                 summaryInformation()
-        # To be continued
+        elif(choiceSelection == 4):
+            if(myProperty.noOfProperties() == 0):
+                print("No property has been registered yet")
+            else:
+                displaySpecifiedProperties()
         else:
             print("Invalid choice! Try again!")
 
@@ -48,6 +52,15 @@ def summaryInformation():
     print("Summary Information")
     print("Number of registered properties: " + str(myProperty.noOfProperties()))
     print("Total price: $" + '{:.2f}'.format(myProperty.totalPrice()))
+    print("Most expensive property: " + str(myProperty.mostExpensiveProperty()))
+
+def displaySpecifiedProperties():
+    userType = input("Property type ('A'partment, 'B'ungalow, 'C'ondominimum): ")
+    if(userType.lower() == "a" or userType.lower() == "b" or userType.lower() == "c"):
+        print("The properties are:")
+        print(myProperty.findPropertyByType(userType))
+    else:
+        print("Invalid property type entered! Returning to the main menu..")
 
 def propertyMenu():
     print(str(myProperty.getCompanyName()))

@@ -27,7 +27,7 @@ class Property:
         return self.Type
 
     def getSize(self):
-        return self.Size
+        return self.size
 
     def typeString(self):
         confirmedType = ""
@@ -116,24 +116,12 @@ class PropertyList:
         return mostExpensiveProperty
 
     def findPropertyByType(self, Type):
-        specifiedType = ""  
-        if(Type == "a" or Type == "A"):
-            specifiedType = "Apartment"
-        elif(Type == "b" or Type == "B"):
-            specifiedType = "Bungalow"
-        elif(Type == "c" or Type == "C"):
-            specifiedType = "Condominium"
-        else:
-            specifiedType = "None"
-
         strPropertyByType = ""
         for Property in self.propertyList:
-            if(Property.getType().lower() == specifiedType.lower()):
-                strPropertyByType += str(Property) + "\n"
-            return strPropertyByType
+            if(Property.getType().lower() == Type.lower()):
+                strPropertyByType += "At " + Property.getLocation() + " with " + str(Property.getSize()) + " square feet, cost $" + '{:.2f}'.format(Property.getPrice()) + "\n"
+        return strPropertyByType
         
-        return None
-
     def sellProperty(self, obj):
         if(obj >= self.noOfProperties()):
             return "Empty"
