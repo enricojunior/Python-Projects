@@ -23,11 +23,32 @@ def main():
                 print("No property has been registered yet")
             else:
                 displaySpecifiedProperties()
+        elif(choiceSelection == 5):
+            if(myProperty.noOfProperties() == 0):
+                print("No property has been registered yet")
+            else:
+                sellPropertyController()
+        elif(choiceSelection == 6):
+            if(myProperty.noOfProperties() == 0):
+                print("No property has been registered yet")
+            else:
+                showSortedProperties()
+        elif(choiceSelection == 7):
+            if(myProperty.noOfProperties() == 0):
+                print("No property has been registered yet")
+            else:
+                loadFile()
+        elif(choiceSelection == 8):
+            if(myProperty.noOfProperties() == 0):
+                print("No property has been registered yet")
+            else:
+                saveFile()
         else:
             print("Invalid choice! Try again!")
 
-        print()
         choiceSelection = propertyMenu()
+
+    print("Sayonara...")
 
 def addNewProperty():
     print("Adding a new property")
@@ -57,12 +78,45 @@ def summaryInformation():
 def displaySpecifiedProperties():
     userType = input("Property type ('A'partment, 'B'ungalow, 'C'ondominimum): ")
     if(userType.lower() == "a" or userType.lower() == "b" or userType.lower() == "c"):
-        print("The properties are:")
         print(myProperty.findPropertyByType(userType))
     else:
         print("Invalid property type entered! Returning to the main menu..")
 
+def sellPropertyController():
+    indexRange = int(input("Property to sell (1.." + str(myProperty.noOfProperties()) + ")? "))
+    if(indexRange <= 0):
+        print("Out of range....")
+    elif(indexRange > myProperty.noOfProperties()):
+        print("Out of range....")
+    else:
+        print(str(myProperty.getPropertyList()[indexRange-1]) + " has been sold.")
+        myProperty.sellProperty(indexRange-1)
+
+def showSortedProperties():
+    print("Sorting properties")
+    criteria = input("- criteria (price, tax, or size): ")
+    if(criteria.lower() == "price"):
+        for i in myProperty.sortedProperties("price"):
+            print(str(i))
+    elif(criteria.lower() == "tax"):
+        for i in myProperty.sortedProperties("tax"):
+            print(str(i) + " with annual tax $" + '{:.2f}'.format(i.annualTax()))
+    elif(criteria.lower() == "size"):
+        for i in myProperty.sortedProperties("size"):
+            print(str(i))
+    else:
+        print("Invalid criteria! Please try again!")
+
+def loadFile():
+    LoadfileName = input("File name to load from: ")
+    myProperty.loadFromFile(LoadfileName)
+
+def saveFile():
+    SavefileName = input("File name to save to: ")
+    myProperty.saveToFile(SavefileName)
+
 def propertyMenu():
+    print()
     print(str(myProperty.getCompanyName()))
     print("-" * 22)
     print("1 Add a property\n2 Display all properties\n3 Display summary information about property list")

@@ -116,11 +116,19 @@ class PropertyList:
         return mostExpensiveProperty
 
     def findPropertyByType(self, Type):
-        strPropertyByType = ""
+        filteredList = []
+        strDisplayPropertiesByType = ""
         for Property in self.propertyList:
             if(Property.getType().lower() == Type.lower()):
-                strPropertyByType += "At " + Property.getLocation() + " with " + str(Property.getSize()) + " square feet, cost $" + '{:.2f}'.format(Property.getPrice()) + "\n"
-        return strPropertyByType
+                filteredList.append(Property)
+                
+        if not filteredList:
+            strDisplayPropertiesByType += "No property of that specific type yet"
+        else:
+            strDisplayPropertiesByType += "The properties are:\n"
+            for Property in filteredList:
+                strDisplayPropertiesByType += "At " + Property.getLocation() + " with " + str(Property.getSize()) + " square feet, cost $" + '{:.2f}'.format(Property.getPrice()) + "\n"
+        return strDisplayPropertiesByType
         
     def sellProperty(self, obj):
         if(obj >= self.noOfProperties()):
@@ -174,17 +182,17 @@ class PropertyList:
             propType = Property.getType()
             propSize = Property.getSize()
 
-            strDetails += propLocation + "," + str(propPrice) + "," + propType + "," + str(propSize)
+            strDetails += propLocation + "," + str(propPrice) + "," + propType + "," + str(propSize) + "\n"
 
         fileAccess = open(fileName, 'w')
         fileAccess.write(strDetails)
         fileAccess.close()
 
     def loadFromFile(self, fileName):
-        self.propList = []
-        fileAccess = open(fileName, 'r')
-        for Property in fileAccess:
-            strDetails = Property.split(",")
+        self.propertyList = []
+        fileAccess = open(fileName, 'r') 
+        for line in fileAccess:
+            strDetails = line.split(",")
             propLocation = strDetails[0]
             propPrice = float(strDetails[1])
             propType = strDetails[2]
