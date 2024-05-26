@@ -116,7 +116,7 @@ def saveFile():
     myProperty.saveToFile(SavefileName)
 
 def propertyMenu():
-    print()
+    print("")
     print(str(myProperty.getCompanyName()))
     print("-" * 22)
     print("1 Add a property\n2 Display all properties\n3 Display summary information about property list")
